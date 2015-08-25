@@ -15,4 +15,6 @@ RUN chmod +x /usr/local/bin/docker-compose
 
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
+RUN useradd -r -m -G docker jenkins
+
 CMD ["/usr/bin/supervisord"]
