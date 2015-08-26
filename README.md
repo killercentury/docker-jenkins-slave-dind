@@ -10,6 +10,7 @@ This Jenkins slave image should be able to connect with any Jenkins master with 
 
 The environment variable COMMAND_OPTIONS has to be specified with non-empty value, which is a combination of all swarm client options you need. Please refer to this [Swarm Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Swarm+Plugin) for all available options.
 
+Following is an example of command used to connect with the master:
 ```
 docker run --name jenkins-slave-dind --privileged -d -e COMMAND_OPTIONS="-master http://YOUR-JENKINS-MASTER-HOST:YOUR-JENKINS-MASTER-PORT -username YOUR_SLAVE_USERNAME -password YOUR_SLAVE_PASSWORD" killercentury/jenkins-slave-dind
 ```
