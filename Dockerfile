@@ -2,7 +2,7 @@ FROM jpetazzo/dind
 
 MAINTAINER Viktor Farcic <viktor@farcic.com>
 
-ENV SWARM_CLIENT_VERSION 2.2
+ENV SWARM_CLIENT_VERSION 2.0
 ENV DOCKER_COMPOSE_VERSION 1.8.0
 
 RUN useradd -r -m -G docker jenkins
