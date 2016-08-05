@@ -2,8 +2,8 @@ FROM jpetazzo/dind
 
 MAINTAINER Decheng Zhang <killercentury@gmail.com>
 
-ENV SWARM_CLIENT_VERSION 2.0
-ENV DOCKER_COMPOSE_VERSION 1.3.3
+ENV SWARM_CLIENT_VERSION 2.2
+ENV DOCKER_COMPOSE_VERSION 1.8.0
 
 # Add a Jenkins user with permission to run docker commands
 RUN useradd -r -m -G docker jenkins
