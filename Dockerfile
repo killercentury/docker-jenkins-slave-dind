@@ -1,16 +1,17 @@
-FROM jpetazzo/dind
+FROM docker
 
 MAINTAINER Viktor Farcic <viktor@farcic.com>
 
 ENV SWARM_CLIENT_VERSION 2.0
 ENV DOCKER_COMPOSE_VERSION 1.8.0
+ENV COMMAND_OPTIONS ""
 
-RUN useradd -r -m -G docker jenkins
-RUN apt-get update && apt-get install -y curl zip openjdk-7-jre-headless supervisor && rm -rf /var/lib/apt/lists/*
-RUN wget -q http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/${SWARM_CLIENT_VERSION}/swarm-client-${SWARM_CLIENT_VERSION}-jar-with-dependencies.jar -P /home/jenkins
-RUN curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
-RUN chmod +x /usr/local/bin/docker-compose
+RUN adduser -G root -D jenkins
+RUN apk --update add openjdk8-jre python py-pip
+RUN wget -q http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/${SWARM_CLIENT_VERSION}/swarm-client-${SWARM_CLIENT_VERSION}-jar-with-dependencies.jar -P /home/jenkins/
+RUN pip install docker-compose
 
-ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY run.sh /run.sh
+RUN chmod +x /run.sh
 
-CMD ["/usr/bin/supervisord"]
+CMD ["/run.sh"]
