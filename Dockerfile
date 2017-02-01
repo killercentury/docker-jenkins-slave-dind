@@ -1,9 +1,9 @@
-FROM docker:1.12.1
+FROM docker:1.13
 
 MAINTAINER Viktor Farcic <viktor@farcic.com>
 
 ENV SWARM_CLIENT_VERSION 2.2
-ENV DOCKER_COMPOSE_VERSION 1.8.0
+ENV DOCKER_COMPOSE_VERSION 1.10.0
 ENV COMMAND_OPTIONS ""
 
 RUN adduser -G root -D jenkins
