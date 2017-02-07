@@ -21,11 +21,11 @@ LABEL org.label-schema.vendor="vfarcic" \
     org.label-schema.build-date=$build_date
 
 ENV "SWARM_CLIENT_VERSION=2.2" \
-    "DOCKER_COMPOSE_VERSION=1.10.0" \
+    "DOCKER_COMPOSE_VERSION=1.10.1" \
     "COMMAND_OPTIONS="
 
 RUN adduser -G root -D jenkins \
- && apk --update add openjdk8-jre python py-pip git \
+ && apk --update --no-cache add openjdk8-jre python py-pip git openssh \
  && wget -q https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/${SWARM_CLIENT_VERSION}/swarm-client-${SWARM_CLIENT_VERSION}-jar-with-dependencies.jar -P /home/jenkins/ \
  && pip install docker-compose
 
