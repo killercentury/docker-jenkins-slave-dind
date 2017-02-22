@@ -21,7 +21,7 @@ LABEL org.label-schema.vendor="vfarcic" \
     org.label-schema.build-date=$build_date
 
 ENV "SWARM_CLIENT_VERSION=2.2" \
-    "DOCKER_COMPOSE_VERSION=1.11.1" \
+    "DOCKER_COMPOSE_VERSION=1.11.2" \
     "COMMAND_OPTIONS="
 
 RUN adduser -G root -D jenkins \
