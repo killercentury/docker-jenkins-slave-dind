@@ -22,7 +22,9 @@ LABEL org.label-schema.vendor="vfarcic" \
 
 ENV "SWARM_CLIENT_VERSION=3.3" \
     "DOCKER_COMPOSE_VERSION=1.11.2" \
-    "COMMAND_OPTIONS="
+    "COMMAND_OPTIONS=" \
+    "USER_NAME_SECRET=" \
+    "PASSWORD_SECRET="
 
 RUN adduser -G root -D jenkins \
  && apk --update --no-cache add openjdk8-jre python py-pip git openssh \
