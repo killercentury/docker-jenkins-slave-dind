@@ -6,7 +6,8 @@ Usage
 
 The environment variable COMMAND_OPTIONS has to be specified with non-empty value, which is a combination of all swarm client options you need. Please refer to this [Swarm Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Swarm+Plugin) for all available options.
 
-For the username and password, it makes use of [Docker Secrets](https://docs.docker.com/engine/swarm/secrets/).
+**Warning** For the username and password, it makes use of [Docker Secrets](https://docs.docker.com/engine/swarm/secrets/).
+
 You can run this service as follows:
 
 ```bash
