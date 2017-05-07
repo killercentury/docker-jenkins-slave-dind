@@ -1,4 +1,4 @@
-FROM docker:1.13.1
+FROM docker:17.03
 
 MAINTAINER Viktor Farcic <viktor@farcic.com>
 
