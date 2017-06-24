@@ -8,11 +8,16 @@ ENV DOCKER_COMPOSE_VERSION 1.3.3
 # Add a Jenkins user with permission to run docker commands
 RUN useradd -r -m -G docker jenkins
 
-# Install necessary packages
-RUN apt-get update && apt-get install -y curl zip openjdk-7-jre-headless supervisor && rm -rf /var/lib/apt/lists/*
+# Install necessary packages (with JDK 8)
+RUN apt-get -q update &&\
+    apt-get -q install -y --no-install-recommends software-properties-common &&\
+    add-apt-repository -y ppa:openjdk-r/ppa &&\
+    apt-get -q update &&\
+    apt-get -q install -y --no-install-recommends openjdk-8-jre-headless curl zip supervisor &&\
+apt-get -q clean -y && rm -rf /var/lib/apt/lists/* && rm -f /var/cache/apt/*.bin
 
 # Install Jenkins Swarm Client
-RUN wget -q http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/${SWARM_CLIENT_VERSION}/swarm-client-${SWARM_CLIENT_VERSION}-jar-with-dependencies.jar -P /home/jenkins
+RUN wget -q https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/${SWARM_CLIENT_VERSION}/swarm-client-${SWARM_CLIENT_VERSION}-jar-with-dependencies.jar -P /home/jenkins
 
 # Install Docker Compose
 RUN curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
