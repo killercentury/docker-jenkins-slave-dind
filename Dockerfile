@@ -1,8 +1,8 @@
-FROM docker:17.05
+FROM docker:17.06
 
 MAINTAINER Viktor Farcic <viktor@farcic.com>
 
-ARG "version=0.1.0-dev"
+ARG "version=0.2.0"
 ARG "build_date=unknown"
 ARG "commit_hash=unknown"
 ARG "vcs_url=unknown"
@@ -20,8 +20,8 @@ LABEL org.label-schema.vendor="vfarcic" \
     org.label-schema.schema-version="1.0" \
     org.label-schema.build-date=$build_date
 
-ENV "SWARM_CLIENT_VERSION=3.3" \
-    "DOCKER_COMPOSE_VERSION=1.13.0" \
+ENV "SWARM_CLIENT_VERSION=3.4" \
+    "DOCKER_COMPOSE_VERSION=1.14.0" \
     "COMMAND_OPTIONS=" \
     "USER_NAME_SECRET=" \
     "PASSWORD_SECRET="
