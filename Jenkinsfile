@@ -38,6 +38,12 @@ pipeline {
     }
   }
   post {
+    success {
+      slackSend(
+        color: "good",
+        message: "vfarcic/jenkins-swarm-agent:${currentBuild.displayName} was built and pushed to the registry. Upgrade the clusters."
+      )
+    }
     failure {
       slackSend(
         color: "danger",
