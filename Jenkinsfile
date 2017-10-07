@@ -15,7 +15,6 @@ pipeline {
           def dateFormat = new SimpleDateFormat("yy.MM.dd")
           currentBuild.displayName = dateFormat.format(new Date()) + "-" + env.BUILD_NUMBER
         }
-        checkout scm
         sh "docker image build -t vfarcic/jenkins-swarm-agent ."
       }
     }
@@ -24,16 +23,21 @@ pipeline {
         branch "master"
       }
       steps {
-        withCredentials([usernamePassword(
-          credentialsId: "docker",
-          usernameVariable: "USER",
-          passwordVariable: "PASS"
-        )]) {
-          sh "docker login -u $USER -p $PASS"
-        }
+        dockerLogin()
         sh "docker tag vfarcic/jenkins-swarm-agent vfarcic/jenkins-swarm-agent:${currentBuild.displayName}"
         sh "docker image push vfarcic/jenkins-swarm-agent:latest"
         sh "docker image push vfarcic/jenkins-swarm-agent:${currentBuild.displayName}"
+      }
+    }
+    stage("deploy") {
+      when {
+        branch "master"
+      }
+      agent {
+        label "prod"
+      }
+      steps {
+        dfDeploy("jenkins-swarm-agent", "infra_jenkins-agent", "")
       }
     }
   }
