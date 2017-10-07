@@ -1,4 +1,4 @@
-FROM docker:17.06
+FROM docker:17.09
 
 MAINTAINER Viktor Farcic <viktor@farcic.com>
 
@@ -21,7 +21,7 @@ LABEL org.label-schema.vendor="vfarcic" \
     org.label-schema.build-date=$build_date
 
 ENV SWARM_CLIENT_VERSION="3.3" \
-    DOCKER_COMPOSE_VERSION="1.15.0" \
+    DOCKER_COMPOSE_VERSION="1.16.1" \
     COMMAND_OPTIONS="" \
     USER_NAME_SECRET="" \
     PASSWORD_SECRET=""
