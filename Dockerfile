@@ -2,11 +2,11 @@ FROM docker:17.11
 
 MAINTAINER Viktor Farcic <viktor@farcic.com>
 
-ARG "version=0.2.0"
-ARG "build_date=unknown"
-ARG "commit_hash=unknown"
-ARG "vcs_url=unknown"
-ARG "vcs_branch=unknown"
+ARG version="0.2.0"
+ARG build_date="unknown"
+ARG commit_hash="unknown"
+ARG vcs_url="unknown"
+ARG vcs_branch="unknown"
 
 LABEL org.label-schema.vendor="vfarcic" \
     org.label-schema.name="jenkins-swarm-agent" \
