@@ -5,7 +5,8 @@ fi
 
 if [ -f "${PASSWORD_SECRET}" ]; then
     read PSS < ${PASSWORD_SECRET}
-    COMMAND_OPTIONS="${COMMAND_OPTIONS} -password $PSS"
+    export PSS
+    COMMAND_OPTIONS="${COMMAND_OPTIONS} -passwordEnvVariable PSS"
 fi
 
 java -jar /home/jenkins/swarm-client-${SWARM_CLIENT_VERSION}.jar ${COMMAND_OPTIONS}
