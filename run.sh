@@ -9,4 +9,10 @@ if [ -f "${PASSWORD_SECRET}" ]; then
     COMMAND_OPTIONS="${COMMAND_OPTIONS} -passwordEnvVariable PSS"
 fi
 
-java -jar /home/jenkins/swarm-client-${SWARM_CLIENT_VERSION}.jar ${COMMAND_OPTIONS}
+GROUP=$(stat -c %G /var/run/docker.sock)
+if [ ! $(grep ^$GROUP: /etc/group) ]; then
+    addgroup -G $(stat -c %g /var/run/docker.sock) $GROUP
+fi
+adduser jenkins $GROUP
+
+exec su jenkins -c "exec java -jar /home/jenkins/swarm-client-${SWARM_CLIENT_VERSION}.jar ${COMMAND_OPTIONS}"
