@@ -26,7 +26,7 @@ ENV SWARM_CLIENT_VERSION="3.6" \
     USER_NAME_SECRET="" \
     PASSWORD_SECRET=""
 
-RUN adduser -D jenkins && \
+RUN adduser -G root -D jenkins && \
     apk --update --no-cache add openjdk8-jre python py-pip git openssh ca-certificates openssl && \
     wget -q https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/${SWARM_CLIENT_VERSION}/swarm-client-${SWARM_CLIENT_VERSION}.jar -P /home/jenkins/ && \
     pip install docker-compose
