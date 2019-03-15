@@ -24,9 +24,9 @@ pipeline {
       }
       steps {
         dockerLogin()
-        sh "docker tag vfarcic/jenkins-swarm-agent vfarcic/jenkins-swarm-agent:${currentBuild.displayName}"
-        sh "docker image push vfarcic/jenkins-swarm-agent:latest"
-        sh "docker image push vfarcic/jenkins-swarm-agent:${currentBuild.displayName}"
+        sh "sudo docker tag vfarcic/jenkins-swarm-agent vfarcic/jenkins-swarm-agent:${currentBuild.displayName}"
+        sh "sudo docker image push vfarcic/jenkins-swarm-agent:latest"
+        sh "sudo docker image push vfarcic/jenkins-swarm-agent:${currentBuild.displayName}"
       }
     }
     stage("deploy") {
