@@ -15,7 +15,7 @@ pipeline {
           def dateFormat = new SimpleDateFormat("yy.MM.dd")
           currentBuild.displayName = dateFormat.format(new Date()) + "-" + env.BUILD_NUMBER
         }
-        sh "docker image build -t vfarcic/jenkins-swarm-agent ."
+        sh "sudo docker image build -t vfarcic/jenkins-swarm-agent ."
       }
     }
     stage("release") {
