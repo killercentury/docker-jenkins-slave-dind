@@ -1,23 +1,37 @@
-FROM jpetazzo/dind
+FROM docker:18.02
 
-MAINTAINER Decheng Zhang <killercentury@gmail.com>
+MAINTAINER Viktor Farcic <viktor@farcic.com>
 
-ENV SWARM_CLIENT_VERSION 2.0
-ENV DOCKER_COMPOSE_VERSION 1.3.3
+ARG version="0.2.0"
+ARG build_date="unknown"
+ARG commit_hash="unknown"
+ARG vcs_url="unknown"
+ARG vcs_branch="unknown"
 
-# Add a Jenkins user with permission to run docker commands
-RUN useradd -r -m -G docker jenkins
+LABEL org.label-schema.vendor="vfarcic" \
+    org.label-schema.name="jenkins-swarm-agent" \
+    org.label-schema.description="Jenkins agent based on the Swarm plugin" \
+    org.label-schema.usage="/src/README.md" \
+    org.label-schema.url="https://github.com/vfarcic/docker-jenkins-slave-dind/blob/master/README.md" \
+    org.label-schema.vcs-url=$vcs_url \
+    org.label-schema.vcs-branch=$vcs_branch \
+    org.label-schema.vcs-ref=$commit_hash \
+    org.label-schema.version=$version \
+    org.label-schema.schema-version="1.0" \
+    org.label-schema.build-date=$build_date
 
-# Install necessary packages
-RUN apt-get update && apt-get install -y curl zip openjdk-7-jre-headless supervisor && rm -rf /var/lib/apt/lists/*
+ENV SWARM_CLIENT_VERSION="3.9" \
+    DOCKER_COMPOSE_VERSION="1.19.0" \
+    COMMAND_OPTIONS="" \
+    USER_NAME_SECRET="" \
+    PASSWORD_SECRET=""
 
-# Install Jenkins Swarm Client
-RUN wget -q http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/${SWARM_CLIENT_VERSION}/swarm-client-${SWARM_CLIENT_VERSION}-jar-with-dependencies.jar -P /home/jenkins
+RUN adduser -G root -D jenkins && \
+    apk --update --no-cache add openjdk8-jre python py-pip git git-lfs openssh ca-certificates openssl && \
+    wget -q https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/${SWARM_CLIENT_VERSION}/swarm-client-${SWARM_CLIENT_VERSION}.jar -P /home/jenkins/ && \
+    pip install docker-compose
 
-# Install Docker Compose
-RUN curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
-RUN chmod +x /usr/local/bin/docker-compose
+COPY run.sh /run.sh
+RUN chmod +x /run.sh
 
-ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-
-CMD ["/usr/bin/supervisord"]
+CMD ["/run.sh"]
